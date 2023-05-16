@@ -251,3 +251,27 @@
   new PureCounter();
 
 })()
+
+// Contact section
+$(document).ready(function() {
+  $('form').submit(function(e) {
+    e.preventDefault();
+    
+    // Perform form submission using AJAX
+    $.ajax({
+      url: $(this).attr('action'),
+      type: $(this).attr('method'),
+      data: $(this).serialize(),
+      success: function(response) {
+        if (response && response.status === 'sent') {
+          $('.sent-message').show();
+        }
+      },
+      error: function() {
+        // Handle error silently without showing any message
+      }
+    });
+
+    return false; // Prevent form submission and page reload
+  });
+});

@@ -826,6 +826,10 @@ section .container {
   border-radius: 4px;
 }
 
+/* .text1 {
+  font-weight: bolder;
+} */
+
 .portfolio #portfolio-flters li:hover,
 .portfolio #portfolio-flters li.filter-active {
   background: #dda447;
