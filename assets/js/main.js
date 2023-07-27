@@ -253,25 +253,61 @@
 })()
 
 // Contact section
-$(document).ready(function() {
-  $('form').submit(function(e) {
-    e.preventDefault();
+// $(document).ready(function() {
+//   $('form').submit(function(e) {
+//     e.preventDefault();
     
-    // Perform form submission using AJAX
-    $.ajax({
-      url: $(this).attr('action'),
-      type: $(this).attr('method'),
-      data: $(this).serialize(),
-      success: function(response) {
-        if (response && response.status === 'sent') {
-          $('.sent-message').show();
-        }
-      },
-      error: function() {
-        // Handle error silently without showing any message
-      }
-    });
+//     // Perform form submission using AJAX
+//     $.ajax({
+//       url: $(this).attr('action'),
+//       type: $(this).attr('method'),
+//       data: $(this).serialize(),
+//       success: function(response) {
+//         if (response && response.status === 'sent') {
+//           $('.sent-message').show();
+//         }
+//       },
+//       error: function() {
+//         // Handle error silently without showing any message
+//       }
+//     });
 
-    return false; // Prevent form submission and page reload
-  });
+//     return false; // Prevent form submission and page reload
+//   });
+// });
+
+// Function to send email
+function sendEmail(formData) {
+  const templateParams = {
+    from_name: formData.get('name'),
+    from_email: formData.get('email'),
+    to_name: 'Rohit George', // Replace with owner's name
+    to_email: 'rohitgeorge2000@gmail.com', // Replace with owner's email address
+    message: formData.get('message')
+  };
+
+  emailjs.send('service_t409zt4', 'template_z0k0t9f', templateParams)
+    .then(function(response) {
+      console.log('Email sent successfully');
+    }, function(error) {
+      console.error('Error sending email', error);
+    });
+}
+
+// Handle form submission
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const formData = new FormData(this);
+
+  // Send email to the owner
+  sendEmail(formData);
+
+  // Send confirmation email to the submitter
+  // formData.set('name', 'Submitter');
+  // formData.set('email', 'submitter@example.com'); // Replace with submitter's email address
+  // sendEmail(formData);
+
+  // Optionally, redirect to a thank you page
+  // window.location.href = '/thank-you.html';
 });
+
